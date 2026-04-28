@@ -1,0 +1,14 @@
+{
+  "name": "AgriGuard AI",
+  "description": "Smart negotiation assistant and market intelligence for smallholder farmers, providing real-time price trends, AI-driven scripts, and inventory management.",
+  "requestFramePermissions": [
+    "geolocation",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "AI-powered negotiation scripts",
+    "Real-time market price tracking",
+    "Smart inventory and storage monitoring",
+    "Local buyer mapping"
+  ]
+}

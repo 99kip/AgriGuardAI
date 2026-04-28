@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Allow connection test
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Validation Helpers ---
+    function isValidMarketPrice(data) {
+      return data.crop is string && data.market is string && 
+             data.price is number && data.unit is string &&
+             data.updatedAt is timestamp &&
+             (!data.keys().hasAll(['historicalPrices']) || (
+               data.historicalPrices is list && 
+               data.historicalPrices.size() <= 20 &&
+               (data.historicalPrices.size() == 0 || data.historicalPrices[0] is map)
+             ));
+    }
+
+    function isValidInventory(data) {
+      return data.userId == request.auth.uid &&
+             data.crop is string && data.quantity is number &&
+             data.unit is string && data.updatedAt == request.time;
+    }
+
+    function isValidChatMessage(data) {
+      return data.userId == request.auth.uid &&
+             data.role in ['user', 'assistant'] &&
+             data.content is string && data.content.size() < 5000 &&
+             data.createdAt == request.time;
+    }
+
+    function isValidFarmerProfile(data) {
+      return data.uid == request.auth.uid &&
+             data.location is string && data.location.size() <= 200 &&
+             data.updatedAt is string && data.updatedAt.size() <= 128;
+    }
+
+    // --- Collections ---
+
+    // 1. Markets: Publicly readable for all signed in users, but only system (or admin) can write.
+    // For this demo, let's allow read for signed in users.
+    match /markets/{marketId} {
+      allow read: if isSignedIn();
+      allow write: if false; // System only
+    }
+
+    // 2. Buyers: Publicly readable for map view.
+    match /buyers/{buyerId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    // 3. Farmers: Top level profiles
+    match /farmers/{farmerId} {
+      allow get: if isOwner(farmerId);
+      allow create: if isOwner(farmerId) && isValidFarmerProfile(incoming());
+      allow update: if isOwner(farmerId) && isValidFarmerProfile(incoming()) &&
+                      incoming().diff(existing()).affectedKeys().hasOnly(['location', 'updatedAt']);
+    }
+
+    // 4. User subcollections
+    match /users/{userId} {
+      // User profile can only be read/written by owner
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && incoming().keys().hasAll(['userId']) && incoming().userId == userId;
+      allow update: if isOwner(userId) && incoming().userId == userId;
+
+      match /inventory/{inventoryId} {
+        allow list: if isOwner(userId);
+        allow get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidInventory(incoming());
+        allow update: if isOwner(userId) && isValidInventory(incoming()) && 
+                        incoming().diff(existing()).affectedKeys().hasOnly(['quantity', 'condition', 'humidity', 'updatedAt']);
+        allow delete: if isOwner(userId);
+      }
+
+      match /chats/{chatId} {
+        allow list: if isOwner(userId);
+        allow get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidChatMessage(incoming());
+        allow update: if false; // Messages are immutable
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}

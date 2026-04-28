@@ -1,0 +1,110 @@
+{
+  "entities": {
+    "MarketPrice": {
+      "title": "Market Price",
+      "description": "Real-time price data for a specific crop at a market.",
+      "type": "object",
+      "properties": {
+        "crop": { "type": "string", "enum": ["Maize", "Tomatoes", "Potatoes", "Wheat", "Beans"] },
+        "market": { "type": "string" },
+        "price": { "type": "number" },
+        "averagePrice": { "type": "number" },
+        "highestPrice": { "type": "number" },
+        "unit": { "type": "string" },
+        "change24h": { "type": "number" },
+        "status": { "type": "string", "enum": ["Stable", "Oversupplied", "Peak"] },
+        "historicalPrices": { 
+          "type": "array", 
+          "items": { 
+            "type": "object",
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "price": { "type": "number" }
+            }
+          } 
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["crop", "market", "price", "unit", "updatedAt"]
+    },
+    "Inventory": {
+      "title": "Inventory",
+      "description": "Farmer's stored crops and health status.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "crop": { "type": "string" },
+        "quantity": { "type": "number" },
+        "unit": { "type": "string" },
+        "grade": { "type": "string" },
+        "harvestDate": { "type": "string", "format": "date" },
+        "condition": { "type": "string" },
+        "humidity": { "type": "number" },
+        "storageLocation": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "crop", "quantity", "unit", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "Messages in a negotiation session.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "metadata": { "type": "object" }
+      },
+      "required": ["userId", "role", "content", "createdAt"]
+    },
+    "Buyer": {
+      "title": "Buyer",
+      "description": "Verified local crop buyers.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "distance": { "type": "number" },
+        "location": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "demandLevel": { "type": "string" },
+        "capacity": { "type": "number" },
+        "cropInterests": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["name", "distance", "location"]
+    },
+    "FarmerProfile": {
+      "title": "Farmer Profile",
+      "description": "Extended profile information for the farmer.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "location": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "location", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "markets": {
+      "schema": "MarketPrice",
+      "description": "Collection of current market prices."
+    },
+    "users/{userId}/inventory": {
+      "schema": "Inventory",
+      "description": "User's individual crop inventory."
+    },
+    "users/{userId}/chats": {
+      "schema": "ChatMessage",
+      "description": "Chat sessions with the AI helper."
+    },
+    "buyers": {
+      "schema": "Buyer",
+      "description": "Verified buyers for the market map."
+    },
+    "farmers": {
+      "schema": "FarmerProfile",
+      "description": "Farmer profile details indexed by user ID."
+    }
+  }
+}

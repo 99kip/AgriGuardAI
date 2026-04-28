@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-surface-sand: #F8F5F2; 
+  --color-primary: #064E3B; 
+  --color-primary-container: #10B981; 
+  --color-on-primary-container: #ffffff;
+  --color-secondary: #064E3B; 
+  --color-tertiary: #10B981; 
+  --color-surface: #ffffff;
+}
+
+@layer base {
+  body {
+    @apply bg-surface-sand text-slate-900 font-sans selection:bg-primary/10 transition-colors duration-500;
+  }
+}
+
+@layer components {
+  .premium-card {
+    @apply bg-white rounded-[3rem] border border-black/[0.03] shadow-[0_8px_40px_rgba(0,0,0,0.02)] overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.04)] hover:-translate-y-1;
+  }
+  
+  .sheng-badge {
+    @apply bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-100/50;
+  }
+  
+  .live-indicator {
+    @apply bg-rose-500 relative flex;
+    &::after {
+      content: '';
+      @apply absolute inset-0 rounded-full bg-rose-500 animate-ping opacity-40;
+    }
+  }
+
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-2xl border border-white/40 shadow-sm transition-all duration-500;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+}
+
