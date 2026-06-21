@@ -1,37 +1,35 @@
-# AgriGuard AI 🌾🤖
+# AgriGuard AI web app 🌾🤖
 
-**AgriGuard AI** is a premium intelligence platform designed to empower smallholder farmers with high-fidelity market data, micro-climate insights, and AI-driven negotiation strategies. Built for the modern agricultural landscape, it bridges the information gap between the field and the market.
+AgriGuard AI is a premium intelligence platform designed to empower smallholder farmers with high-fidelity market data, micro-climate insights, and AI-driven negotiation strategies. Built for the modern agricultural landscape, it bridges the information gap between the field and the market.
 
----
+Vision
+To transform how small-scale agriculturalists interact with markets by providing toolsets previously only available to large-scale commercial operations. We combine neural intelligence with localized data to maximize harvest value and ensure food security
 
-## 🌟 Vision
-To transform how small-scale agriculturalists interact with markets by providing toolsets previously only available to large-scale commercial operations. We combine neural intelligence with localized data to maximize harvest value and ensure food security.
+ Key Features
 
-## 🚀 Key Features
-
-### 📊 Intelligence Dashboard
+ Intelligence Dashboard
 - **Local Micro-Climate:** Real-time professional-grade weather tracking tailored to specific farming regions.
 - **Neural Advisory:** Staggered AI-generated strategies that analyze current conditions to provide actionable farming tips.
 - **Market Pulse:** Live tracking of crop prices (Maize, Tomatoes, Potatoes, etc.) with trend analysis and historical visualization.
 
-### 💬 AI Strategy Assistant (Negotiator)
+ AI Strategy Assistant (Negotiator)
 - **Deep Scan Analysis:** A specialized chat interface that acts as a strategy assistant.
 - **Negotiation Scripts:** Helps farmers articulate their value to buyers and negotiate better pricing.
 - **Multi-modal Input:** Support for voice interaction (Speech-to-Text) to lower the barrier of entry for field-based use.
 
-### 🌍 Regional Mapping & Market Trends
+Regional Mapping & Market Trends
 - **Localized Pricing:** Intelligence specific to Kenyan regional markets.
 - **Price Forecasting:** Predictive analysis on whether to sell immediately or hold inventory for better margins.
 - **Algo-Suggestions:** Automated suggestions based on price gaps between regions.
 
-### 🛠️ Professional Profile
+Professional Profile
 - **AgriID:** Unique digital identity for farmers.
 - **Multi-lingual Interface:** Support for English and **Sheng**, ensuring inclusivity for local communities.
 - **Offline Sync:** Visual indicators for synchronization status ensuring data integrity in low-connectivity areas.
 
 ---
 
-## 🛠️ Tech Stack
+Tech Stack
 
 - **Frontend:** [React 18](https://reactjs.org/) + [Vite](https://vitejs.dev/)
 - **Animation:** [motion/react](https://motion.dev/) (formerly Framer Motion)
@@ -42,7 +40,7 @@ To transform how small-scale agriculturalists interact with markets by providing
 
 ---
 
-## 📂 Project Structure
+ Project Structure
 
 ```bash
 src/
@@ -60,7 +58,7 @@ src/
 
 ---
 
-## 🔐 Security & Privacy
+ Security & Privacy
 
 AgriGuard AI follows industry-standard security protocols:
 - **AgriGuard Secure Protocol:** All neural links and data transactions are verified.
