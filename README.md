@@ -1,4 +1,4 @@
-# AgriGuard AI web app 🌾🤖
+# AgriGuard AI Angular web app
 
 AgriGuard AI is a premium intelligence platform designed to empower smallholder farmers with high-fidelity market data, micro-climate insights, and AI-driven negotiation strategies. Built for the modern agricultural landscape, it bridges the information gap between the field and the market.
 
